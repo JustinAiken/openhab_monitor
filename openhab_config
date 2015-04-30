@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Enter your OpenHAB items root in here:
+OPENHAB_ROOT="http://address_of_your_openHAB:8080/rest/items"
+
+# Enter each of your GE Bulbs here, with the format "id:openhab_item_for_status:openhab_item_for_level"
+GE_BULBS=(
+  "1:itm_light_office:itm_light_lvl_office"
+  "2:itm_light_kitchen:itm_light_lvl_kitchen"
+)
+#...and so on.
+
+# How many seconds to sleep between each check of the database:
+GE_POLL_INTERVAL=3
+
+# Every x intervals, force an update of the value to openHAB to ensure it stays in sync
+GE_POLL_FORCE=20
