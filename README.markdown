@@ -19,7 +19,18 @@ First, edit `openhab_config` to put in your devices, and adjust your intervals/t
 
 ## Installation
 
-If you have your wink hub set up with ssh keys and named `winkhub`, you can just use the [install script](install.sh).
+### Automatic
+
+If you have your wink hub set up with ssh keys and named `winkhub`, you can just run the [install script](install.sh) after you've configured it.
+
+### Manual
+
+1. Copy [openhab_config](openhab_config) to `/etc`
+2. Copy [openhab_monitor.sh](openhab_monitor.sh) to `/bin`
+3. Copy [S81openhab_monitor](S81openhab_monitor) to `/etc/init.d`
+4. Make sure all of those ^^ are executable (`chmod +x ...`)
+5. `/etc/init.d/S81openhab_monitor start`
+
 If not, just copy the three files over manually.
 
 ### Credits
