@@ -4,12 +4,14 @@
 APRON_DATABASE_LOCATION="/database/apron.db"
 GE_STATUS_ATTRIBUTE=1
 GE_LEVEL_ATTRIBUTE=2
+ZWAVE_LEVEL_ATTRIBUTE=7
 
 # These are:
 OPENHAB_POLL_INTERVAL=3
 OPENHAB_POLL_FORCE=20
 OPENHAB_ROOT=""
 GE_BULBS=()
+ZWAVE_DEVICES=()
 
 # Load the config file
 source /etc/openhab_config
@@ -19,6 +21,36 @@ function curl_openhab()
   local data=$1
   local item_name=$2
   curl --header "Content-Type: text/plain" --request PUT --data "$data" $OPENHAB_ROOT/$item_name/state
+}
+
+function watch_zwave_devices()
+{
+  local force_update=$1
+
+  for device in "${ZWAVE_DEVICES[@]}" ; do
+    local id=${device%%:*}
+    local item_name=${device##*:}
+
+    last=zwave_last_$id
+    val=$(sqlite3 $APRON_DATABASE_LOCATION "SELECT value_get FROM zwaveDeviceState LEFT JOIN zwaveDevice ON zwaveDeviceState.nodeId = zwaveDevice.nodeId WHERE masterId = $id AND attributeId = $ZWAVE_LEVEL_ATTRIBUTE;");
+
+    # Initialize vars to hold state
+    if [ -z "${!last}" ]; then
+      echo "$item_name initial val: ${!last} -> $val"
+      eval "zwave_last_$id=$val"
+      curl_openhab $val $item_name
+    elif [ "$val" != "${!last}" ]; then
+      echo "$item_name Change:  ${!last} -> $val"
+      eval "zwave_last_$id=$val"
+      curl_openhab $val $item_name
+    fi
+
+    # Force an update of the state if it's time:
+    if [ -n "$force_update" ]; then
+      echo "Forcing update of $item_name"
+      curl_openhab $val $item_name
+    fi
+  done
 }
 
 function watch_ge_bulbs()
@@ -91,9 +123,11 @@ do
   for (( c=1; c<=$OPENHAB_POLL_FORCE; c++ ))
   do
     watch_ge_bulbs
+    watch_zwave_devices
     sleep $OPENHAB_POLL_INTERVAL
   done
 
   watch_ge_bulbs true
+  watch_zwave_devices true
   sleep $OPENHAB_POLL_INTERVAL
 done

@@ -10,6 +10,12 @@ GE_BULBS=(
 )
 #...and so on.
 
+# Enter your Zwave devices here, with the simple format "id:openhab_item_for_status"
+ZWAVE_DEVICES=(
+  "3:itm_light_office"
+  "4:itm_light_kitchen"
+)
+
 # How many seconds to sleep between each check of the database:
 GE_POLL_INTERVAL=3
 

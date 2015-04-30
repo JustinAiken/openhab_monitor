@@ -12,6 +12,7 @@ This way if you trigger a light outside of openHAB, such as through the Wink app
 ### Supported Devices
 
 - GE Link bulbs
+- Zigbee Devices (untested)
 
 ## Config
 
