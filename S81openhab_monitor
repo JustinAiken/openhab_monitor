@@ -2,14 +2,14 @@
 
 case "${1}" in
    start)
-      echo -n "Starting openhab_monitor.sh..."
-      /bin/openhab_monitor.sh > /var/log/openhab_monitor.log 2>&1 &
+      echo -n "Starting openhab_monitor.php..."
+      /usr/bin/php /bin/openhab_monitor.php > /var/log/openhab_monitor.log 2>&1 &
       echo
       ;;
 
    stop)
-      echo -n "Stopping openhab_monitor.sh..."
-      killall openhab_monitor.sh
+      echo -n "Stopping openhab_monitor.php..."
+      kill -9 `ps -eo pid,args | grep '/bin/[o]penhab_monitor.php' | awk '{ print $1 }'`
       echo
       ;;
 

@@ -1,0 +1,24 @@
+; OpenHAB Monitor config file
+
+[defaults]
+DEBUG                   = false
+OPENHAB_ROOT            ="http://address_to_your_openhab/rest/items/"
+APRON_DATABASE_LOCATION = "/Users/jaiken/Desktop/apron.db"
+SLEEP_INTERVAL          = 6
+FORCE_INTERVAL          = 10
+
+; Define devices below (under the appropiate header)
+;
+; Use this format:
+; $device_id[$attribute_id.name] = openhab_name
+;
+; If you want the value converted from a 0-255 scale to 0-100:
+; $device_id[$attribute_id.convert]=true
+;
+; For example, with a GE Link bulb with aprontest id of 1, and an openHAB item name of my_light and my_light_level,
+; you'd have this:
+;
+; 1[1.name]=my_light
+; 1[2.name]=my_light_level
+; 1[2.convert]=true
+;
