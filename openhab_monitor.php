@@ -137,7 +137,7 @@ function query_db($device_type) {
 function curl_openhab($path, $state) {
   global $OPENHAB_ROOT, $DEBUG;
 
-  $cmd = 'curl --silent --show-error --header "Content-Type: text/plain" --request PUT --data "' . $state . '" ' . $OPENHAB_ROOT . $path . "\n";
+  $cmd = 'curl --silent --show-error --header "Content-Type: text/plain" --request PUT --data "' . $state . '" ' . $OPENHAB_ROOT . $path . "/state \n";
   if($DEBUG) echo $cmd;
   unset($out);
   exec($cmd,$out,$retval);
