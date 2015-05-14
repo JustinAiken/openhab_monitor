@@ -158,8 +158,11 @@ function query_and_check($device_type, $force = false) {
           $DEVICES[$device_type][$apron_id][$attribute_id]['last_status'] = $val;
 
           # Convert from 0-255 to 0-100...
-          if($DEVICES[$device_type][$apron_id][$attribute_id]['convert']){
+          if($DEVICES[$device_type][$apron_id][$attribute_id]['convert'] == 'number'){
             $val = intval($val/255 * 100);
+          } elseif($DEVICES[$device_type][$apron_id][$attribute_id]['convert'] == 'switch'){
+            if($val == 'TRUE')  $val = 'ON';
+            if($val == 'FALSE') $val = 'OFF';
           }
 
           if($val != '') {
