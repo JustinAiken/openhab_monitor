@@ -16,6 +16,8 @@ FORCE_INTERVAL          = 10
 ; $device_id[$attribute_id.convert]=number
 ; If you want the value converted from a TRUE/FALSE to ON/OFF:
 ; $device_id[$attribute_id.convert]=switch
+; If you want the value converted from a TRUE/FALSE to OPEN/CLOSED:
+; $device_id[$attribute_id.convert]=contact
 ;
 ; For example, with a GE Link bulb with aprontest id of 1, and an openHAB item name of my_light and my_light_level,
 ; you'd have this:

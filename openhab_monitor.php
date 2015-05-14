@@ -163,6 +163,9 @@ function query_and_check($device_type, $force = false) {
           } elseif($DEVICES[$device_type][$apron_id][$attribute_id]['convert'] == 'switch'){
             if($val == 'TRUE')  $val = 'ON';
             if($val == 'FALSE') $val = 'OFF';
+          } elseif($DEVICES[$device_type][$apron_id][$attribute_id]['convert'] == 'contact'){
+            if($val == 'TRUE')  $val = 'CLOSED';
+            if($val == 'FALSE') $val = 'OPEN';
           }
 
           if($val != '') {
