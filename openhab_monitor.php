@@ -162,7 +162,9 @@ function query_and_check($device_type, $force = false) {
             $val = intval($val/255 * 100);
           }
 
-          curl_openhab($DEVICES[$device_type][$apron_id][$attribute_id]['name'], $val);
+          if($val != '') {
+            curl_openhab($DEVICES[$device_type][$apron_id][$attribute_id]['name'], $val);
+          }
         };
       } else {
         echo "--- skip attribute $attribute_id!\n";
